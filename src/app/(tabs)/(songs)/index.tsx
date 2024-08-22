@@ -27,7 +27,11 @@ const SongsScreen = () => {
               contentInsetAdjustmentBehavior="automatic"
               style={{paddingHorizontal: screenPadding.horizontal}}
             >
-                <TracksList id={generateTracksListId('favorites', search)} tracks={filteredSongs} scrollEnabled={false} />
+                <TracksList
+					id={generateTracksListId('songs', search)}
+					tracks={filteredSongs}
+					scrollEnabled={false}
+				/>
             </ScrollView>
         </View>
     )

@@ -2,7 +2,7 @@ import { FlatList, FlatListProps, Text, View } from 'react-native'
 import library from '@/assets/data/library.json'
 import TracksListItem from './TracksListItem'
 import { utilsStyles } from '@/styles'
-import TrackPlayer, {Track} from 'react-native-track-player'
+import TrackPlayer, { Track } from 'react-native-track-player'
 import FastImage from 'react-native-fast-image'
 import { unknowTrackImageUri } from '@/constants/image'
 import { useRef } from 'react'
@@ -18,18 +18,18 @@ const ItemDevider = () => (
     <View style={{ ...utilsStyles.itemSeperator, marginVertical: 9, marginLeft: 60 }} />
 )
 
-export const TracksList = ({id, tracks, ...flatListProps}: TracksListProps) => {
+export const TracksList = ({ id, tracks, ...flatListProps }: TracksListProps) => {
     const queueOffset = useRef(0)
-    const {activeQueueId, setActiveQueueId} = useQueue()
+    const { activeQueueId, setActiveQueueId } = useQueue()
 
-    const handleTrackSelect = async(selectedTrack: Track) => {
+    const handleTrackSelect = async (selectedTrack: Track) => {
         const trackIndex = tracks.findIndex((track) => track.url === selectedTrack.url)
 
-        if(trackIndex === -1) return
+        if (trackIndex === -1) return
 
         const isChangingQueue = id !== activeQueueId
 
-        if(isChangingQueue){
+        if (isChangingQueue) {
             const beforeTracks = tracks.slice(0, trackIndex)
             const afterTracks = tracks.slice(trackIndex + 1)
 
@@ -43,9 +43,9 @@ export const TracksList = ({id, tracks, ...flatListProps}: TracksListProps) => {
 
             queueOffset.current = trackIndex
             setActiveQueueId(id)
-        }else{
+        } else {
             const nextTrackIndex = trackIndex - queueOffset.current < 0 ? tracks.length + trackIndex - queueOffset.current
-            : trackIndex -queueOffset.current
+                : trackIndex - queueOffset.current
 
             await TrackPlayer.skip(nextTrackIndex)
 
@@ -54,20 +54,20 @@ export const TracksList = ({id, tracks, ...flatListProps}: TracksListProps) => {
     }
 
     return <FlatList
-    contentContainerStyle={{paddingTop: 10, paddingBottom: 128}}
-    ListHeaderComponent={<QueueControl tracks={tracks} style={{paddingBottom: 20}} />}
-    ListFooterComponent={ItemDevider}
-    data={tracks} 
-    ItemSeparatorComponent={ItemDevider} 
-    ListEmptyComponent={<View>
-               <Text style={utilsStyles.emptyComponentText}>No songs found</Text>
-               <FastImage
-                  source={{uri: unknowTrackImageUri, priority: FastImage.priority.normal}}
-               />
-    </View>}
-    renderItem={({ item: track }) => (
-        <TracksListItem track={track} onTrackSelect={handleTrackSelect} />
-    )}
-    {...flatListProps}
+        contentContainerStyle={{ paddingTop: 10, paddingBottom: 128 }}
+        ListHeaderComponent={<QueueControl tracks={tracks} style={{ paddingBottom: 20 }} />}
+        ListFooterComponent={ItemDevider}
+        data={tracks}
+        ItemSeparatorComponent={ItemDevider}
+        ListEmptyComponent={<View>
+            <Text style={utilsStyles.emptyComponentText}>No songs found</Text>
+            <FastImage
+                source={{ uri: unknowTrackImageUri, priority: FastImage.priority.normal }}
+            />
+        </View>}
+        renderItem={({ item: track }) => (
+            <TracksListItem track={track} onTrackSelect={handleTrackSelect} />
+        )}
+        {...flatListProps}
     />
 }

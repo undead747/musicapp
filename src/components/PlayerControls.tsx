@@ -21,8 +21,7 @@ return (
                <SkipToNextButton />
         </View>
     </View>
-)
-}
+)}
 
 export const PlayPauseButton = ({ style, iconSize }: PlayerButtonProps) => {
     const { playing } = useIsPlaying()
