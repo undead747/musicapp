@@ -16,7 +16,7 @@ export type TracksListProps = Partial<FlatListProps<Track>> & {
 }
 
 const ItemDevider = () => (
-    <View style={{ ...utilsStyles.itemSeperator, marginVertical: 9, marginLeft: 60 }} />
+    <View style={{ ...utilsStyles.itemSeparator, marginVertical: 9, marginLeft: 60 }} />
 )
 
 export const TracksList = ({ id, tracks, hideQueueControls = false, ...flatListProps }: TracksListProps) => {

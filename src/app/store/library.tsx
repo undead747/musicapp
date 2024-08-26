@@ -1,4 +1,4 @@
-import { TrackWithPlaylist } from "@/helper/types";
+import { Artist, TrackWithPlaylist } from "@/helper/types";
 import { Track } from "react-native-track-player";
 import { create } from "zustand";
 import library from '@/assets/data/library.json'
@@ -11,7 +11,19 @@ interface LibraryState {
 
 export const useLibraryStore = create<LibraryState>()((set) => ({
     tracks: library,
-    toggleTrackFavorite: () => {},
+    toggleTrackFavorite: (track) =>
+    set((state) => ({
+        tracks: state.tracks.map((currentTrack) => {
+            if (currentTrack.url === track.url) {
+                return {
+                    ...currentTrack,
+                    rating: currentTrack.rating === 1 ? 0 : 1,
+                }
+            }
+
+            return currentTrack
+        }),
+    })),
     addToPlaylist: () => {}
 })) 
 
@@ -27,3 +39,48 @@ export const useFavorites = () => {
         toggleTrackFavorite
     }
 }
+
+export const useArtists = () => {
+    const artists = useLibraryStore(state => {
+        return state.tracks.reduce((acc, track) => {
+            const existedArtist = acc.find(artist => artist.name === track.artist)
+
+            if(!existedArtist){
+                acc.push({
+                    name: track.artist ?? "unknown", 
+                    tracks: [track]
+                })
+            }else{
+                acc.tracks.push(track)
+            }
+
+            return acc
+        }, [] as Artist[])
+    })
+
+    return artists
+}
+
+export const usePlaylists = () => {
+    const playlists = useLibraryStore(state => {
+        return state.tracks.reduce((acc, track) => {
+            const existedArtist = acc.find(artist => artist.name === track.artist)
+
+            if(!existedArtist){
+                acc.push({
+                    name: track.artist ?? "unknown", 
+                    tracks: [track]
+                })
+            }else{
+                acc.tracks.push(track)
+            }
+
+            return acc
+        })
+    })
+
+    const addToPlaylist = useLibraryStore(state => state.addToPlaylist)
+
+    return {playlists, addToPlaylist}
+}
+

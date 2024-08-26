@@ -8,6 +8,7 @@ import { screenPadding } from "@/constants/tokens"
 import { TracksList } from "@/components/TracksList"
 import { useFavorites } from "@/app/store/library"
 import { trackTitleFilter } from "@/helper/filter"
+import { generateTracksListId } from "@/helper/misellaneous"
 
 const FavoritesScreen = () => {
     const search = useNavigationSearch({
@@ -30,7 +31,7 @@ const FavoritesScreen = () => {
             style={{paddingHorizontal: screenPadding.horizontal}}
             contentInsetAdjustmentBehavior="automatic"
           >
-            <TracksList scrollEnabled={false} tracks={favoritesTracks} />
+            <TracksList scrollEnabled={false} tracks={filteredFavoritesTracks} id={generateTracksListId("favorite", search)} />
           </ScrollView>
         </View>
     )
