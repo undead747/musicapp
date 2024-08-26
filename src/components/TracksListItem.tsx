@@ -14,9 +14,8 @@ export type TracksListItemProps = {
 
 const TracksListItem = ({ track, onTrackSelect: handleTrackSelect }: TracksListItemProps) => {
     const playing = useIsPlaying()
-    
     const isActiveTrack = useActiveTrack()?.url === track.url;
-
+ 
     return (
         <TouchableHighlight onPress={() => handleTrackSelect(track)}>
             <View style={styles.trackItemContainer}>
@@ -33,9 +32,10 @@ const TracksListItem = ({ track, onTrackSelect: handleTrackSelect }: TracksListI
                     />
                     {
                         isActiveTrack && 
-                        (playing ? ( <LoaderKit style={styles.trackPlayingIconIndicator} name='LineScaleParty' color={colors.icon} /> ) : (
+                        (playing.playing ? ( <LoaderKit style={styles.trackPlayingIconIndicator} name='LineScaleParty' color={colors.icon} /> ) : (
                             <Ionicons style={styles.trackPausedIndicator} name='play' size={24} color={colors.icon} />   
                         ))
+
                     }
                 </View>
 

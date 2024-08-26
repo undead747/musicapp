@@ -11,14 +11,15 @@ import { QueueControl } from './QueueControl'
 
 export type TracksListProps = Partial<FlatListProps<Track>> & {
     id: string,
-    tracks: Track[]
+    tracks: Track[],
+    hideQueueControls?: boolean
 }
 
 const ItemDevider = () => (
     <View style={{ ...utilsStyles.itemSeperator, marginVertical: 9, marginLeft: 60 }} />
 )
 
-export const TracksList = ({ id, tracks, ...flatListProps }: TracksListProps) => {
+export const TracksList = ({ id, tracks, hideQueueControls = false, ...flatListProps }: TracksListProps) => {
     const queueOffset = useRef(0)
     const { activeQueueId, setActiveQueueId } = useQueue()
 
@@ -55,7 +56,9 @@ export const TracksList = ({ id, tracks, ...flatListProps }: TracksListProps) =>
 
     return <FlatList
         contentContainerStyle={{ paddingTop: 10, paddingBottom: 128 }}
-        ListHeaderComponent={<QueueControl tracks={tracks} style={{ paddingBottom: 20 }} />}
+        ListHeaderComponent={
+        !hideQueueControls ? <QueueControl tracks={tracks} style={{ paddingBottom: 20 }} /> : undefined
+       }
         ListFooterComponent={ItemDevider}
         data={tracks}
         ItemSeparatorComponent={ItemDevider}
