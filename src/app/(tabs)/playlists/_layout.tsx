@@ -27,6 +27,20 @@ const PlaylistsScreenLayout = () => {
 						headerTintColor: colors.primary,
 					}}
 				/>
+
+				<Stack.Screen
+					name="(modals)/addToPlaylist"
+					options={{
+						presentation: 'modal',
+						headerStyle: {
+							backgroundColor: colors.background,
+						},
+						headerTitle: 'Add to playlist',
+						headerTitleStyle: {
+							color: colors.text,
+						},
+					}}
+				/>
 			</Stack>
 		</View>
 	)

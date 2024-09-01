@@ -2,6 +2,7 @@ import { Artist, Playlist, TrackWithPlaylist } from "@/helper/types";
 import { Track } from "react-native-track-player";
 import { create } from "zustand";
 import library from '@/assets/data/library.json'
+import { unknowTrackImageUri } from "@/constants/image";
 
 interface LibraryState {
 	tracks: TrackWithPlaylist[]
@@ -76,12 +77,12 @@ export const usePlaylists = () => {
 				const existingPlaylist = acc.find((playlist) => playlist.name === playlistName)
 
 				if (existingPlaylist) {
-					existingPlaylist.tracks.push(track)
+					existingPlaylist.track.push(track)
 				} else {
 					acc.push({
 						name: playlistName,
-						tracks: [track],
-						artworkPreview: track.artwork ?? unknownTrackImageUri,
+						track: [track],
+						artworkPreview: track.artwork ?? unknowTrackImageUri,
 					})
 				}
 			})

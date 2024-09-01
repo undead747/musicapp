@@ -6,6 +6,7 @@ import { FlatList, FlatListProps, View, Text } from "react-native"
 import { PlaylistListItem } from "./PlayListListItem"
 import FastImage from "react-native-fast-image"
 import { unknowTrackImageUri } from "@/constants/image"
+import { playlistNameFilter } from "@/helper/filter"
 
 type PlaylistsListProps = {
 	playlists: Playlist[]
@@ -53,8 +54,4 @@ export const PlaylistsList = ({
 			{...flatListProps}
 		/>
 	)
-}
-
-function playlistNameFilter(search: string): (value: Playlist, index: number, array: Playlist[]) => value is Playlist {
-    throw new Error("Function not implemented.")
 }
